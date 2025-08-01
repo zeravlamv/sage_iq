@@ -2,37 +2,35 @@
 
 Sistema de Análisis y Gestión Empresarial con Inteligencia Artificial.
 
-## Estructura del Proyecto
+## Estado del Proyecto
+🚀 **Fase 1: Configuración del Entorno** ✅
+- [Ver estado detallado del proyecto](./ESTADO_PROYECTO.md)
 
-```
-backend/
-├── routers/                    # Endpoints API
-│   ├── auth/                   # Autenticación y Autorización
-│   ├── admin/                  # Endpoints Administrativos
-│   ├── data/                   # Endpoints de Datos
-│   └── integration/            # Integraciones
-├── services/                   # Lógica de Negocio
-│   ├── admin/                  # Servicios Administrativos
-│   ├── data/                   # Servicios de Datos
-│   ├── security/              # Servicios de Seguridad
-│   └── integration/           # Servicios de Integración
-├── models/                    # Modelos de Datos
-│   ├── auth/                  # Modelos de Autenticación
-│   ├── data/                  # Modelos de Datos
-│   └── audit/                 # Modelos de Auditoría
-├── core/                      # Núcleo de la Aplicación
-├── middleware/               # Middlewares
-└── utils/                    # Utilidades
-```
+## Requisitos
+
+### Python
+- Python 3.8 o superior
+- pip (gestor de paquetes de Python)
+
+### Bases de Datos
+- PostgreSQL 12 o superior
+- SQL Server 2019 o superior
+- Driver ODBC 17 para SQL Server
 
 ## Configuración del Entorno
 
-1. Crear entorno virtual:
+1. Clonar el repositorio:
+```bash
+git clone https://github.com/zeravlamv/sage_iq.git
+cd sage_iq
+```
+
+2. Crear entorno virtual:
 ```bash
 python -m venv venv
 ```
 
-2. Activar entorno virtual:
+3. Activar entorno virtual:
 - Windows:
 ```bash
 .\venv\Scripts\activate
@@ -42,16 +40,47 @@ python -m venv venv
 source venv/bin/activate
 ```
 
-3. Instalar dependencias:
+4. Instalar dependencias:
 ```bash
 pip install -r requirements.txt
+```
+
+5. Configurar variables de entorno:
+```bash
+cp .env.example .env
+# Editar .env con tus configuraciones
+```
+
+## Estructura del Proyecto
+
+```
+backend/
+├── routers/                    # Endpoints API
+│   └── admin/                  # Endpoints Administrativos
+│       └── config.py          # Configuración sistema
+├── services/                   # Lógica de Negocio
+│   └── admin/                 # Servicios Administrativos
+│       └── config_service.py  # Servicio de configuración
+├── models/                    # Modelos de Datos
+│   └── data/                 # Modelos de Datos
+│       ├── database_config.py # Configuración DB
+│       └── semantic.py       # Modelos semánticos
+├── core/                     # Núcleo Aplicación
+│   └── database.py          # Conexiones DB
+└── tests/                   # Tests
+    ├── test_config.py      # Tests de configuración
+    └── test_semantic_models.py # Tests de modelos
 ```
 
 ## Configuración de Bases de Datos
 
 ### PostgreSQL (Metadatos)
-- Base de datos para metadatos semánticos y configuración
-- Configuración en `.env`:
+1. Crear base de datos:
+```sql
+CREATE DATABASE sage_iq;
+```
+
+2. Configurar en `.env`:
 ```env
 POSTGRES_USER=your_user
 POSTGRES_PASSWORD=your_password
@@ -61,8 +90,7 @@ POSTGRES_PORT=5432
 ```
 
 ### SQL Server (Datos Empresariales)
-- Base de datos para datos empresariales SAGE 200
-- Configuración en `.env`:
+1. Configurar en `.env`:
 ```env
 SQLSERVER_USER=your_user
 SQLSERVER_PASSWORD=your_password
@@ -100,37 +128,15 @@ Aplicar migraciones:
 alembic upgrade head
 ```
 
-## Estado del Proyecto
+## Documentación
+- [Estado del Proyecto](./ESTADO_PROYECTO.md)
+- [Especificación Completa](./PROMPT_PROYECTO_SAGE_IQ_2025.md)
 
-### Fase 1: Configuración del Entorno ✅
-- [x] Configuración del Repositorio Git
-- [x] Configuración del entorno virtual y dependencias
-- [x] Estructura del proyecto según documentación
-- [x] Implementar modelos base para metadatos semánticos
-- [x] Configurar migraciones con Alembic
-- [x] Implementar tests unitarios
-- [x] Implementar tests de integración
-- [x] Documentación del proyecto
+## Contribuir
+1. Crear una rama para tu feature: `git checkout -b feature/nombre-feature`
+2. Hacer commit de tus cambios: `git commit -am 'feat: Descripción del cambio'`
+3. Push a la rama: `git push origin feature/nombre-feature`
+4. Crear un Pull Request
 
-### Próximas Fases
-- [ ] Fase 2: Implementación Backend
-- [ ] Fase 3: Motor de IA
-- [ ] Fase 4: Frontend Dual
-- [ ] Fase 5: Testing y Despliegue
-
-## Cobertura de Código
-```
-Name                                       Stmts   Miss  Cover
-------------------------------------------------------------------------
-backend/models/__init__.py                     0      0   100%
-backend/models/data/__init__.py                0      0   100%
-backend/models/data/database_config.py        22      0   100%
-backend/models/data/semantic.py               48      0   100%
-backend/services/admin/config_service.py      31      5    84%
-backend/tests/__init__.py                      0      0   100%
-backend/tests/conftest.py                      7      1    86%
-backend/tests/test_config.py                  27      0   100%
-backend/tests/test_semantic_models.py         39      0   100%
-------------------------------------------------------------------------
-TOTAL                                        222     38    83%
-```
+## Licencia
+Este proyecto está bajo la licencia MIT. Ver el archivo [LICENSE](LICENSE) para más detalles.
