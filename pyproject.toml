@@ -1,0 +1,11 @@
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.pytest.ini_options]
+pythonpath = [
+    "."
+]
+testpaths = ["backend/tests"]
+python_files = ["test_*.py"]
+addopts = "-v --cov=backend --cov-report=term-missing"

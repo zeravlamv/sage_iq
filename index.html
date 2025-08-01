@@ -1,0 +1,1728 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="SAGE.IQ 2025 - Plataforma de análisis inteligente para SAGE 200">
+    <meta name="keywords" content="SAGE 200, IA, análisis de datos, business intelligence, procesamiento de lenguaje natural">
+    <title>SAGE.IQ 2025 - Análisis Inteligente</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root[data-theme="light"] {
+            /* Colores principales */
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8f9fa;
+            --text-primary: #1a1a1a;
+            --text-secondary: #4a4a4a;
+            --accent: #0066ff;
+            --border: #e1e1e1;
+            
+            /* Estados */
+            --success: #00c853;
+            --warning: #ffd600;
+            --error: #ff1744;
+            --info: #00b0ff;
+            
+            /* Elementos UI */
+            --card-bg: #ffffff;
+            --card-border: #e1e1e1;
+            --input-bg: #ffffff;
+            --input-border: #e1e1e1;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        :root[data-theme="dark"] {
+            --bg-primary: #121212;
+            --bg-secondary: #1e1e1e;
+            --text-primary: #ffffff;
+            --text-secondary: #b3b3b3;
+            --accent: #2979ff;
+            --border: #333333;
+            
+            --success: #00e676;
+            --warning: #ffd740;
+            --error: #ff5252;
+            --info: #40c4ff;
+            
+            --card-bg: #1e1e1e;
+            --card-border: #333333;
+            --input-bg: #2d2d2d;
+            --input-border: #404040;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+        }
+
+        /* Header y Navegación */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: var(--bg-primary);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        /* Hero Section */
+        .development-dashboard {
+            padding: 2rem;
+            margin-top: 4rem;
+            background-color: var(--bg-primary);
+        }
+
+        .dashboard-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .dashboard-header h1 {
+            font-size: 1.75rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .version-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .version {
+            background-color: var(--accent);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 16px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .last-update {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        .quick-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-item {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .stat-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+        }
+
+        .stat-header i {
+            font-size: 1.25rem;
+            color: var(--accent);
+        }
+
+        .stat-content {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .stat-value {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .stat-detail {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .progress-bar {
+            height: 6px;
+            background-color: var(--bg-secondary);
+            border-radius: 3px;
+            overflow: hidden;
+            margin: 0.5rem 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background-color: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .progress-text {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 6rem 2rem;
+            background-color: var(--bg-primary);
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 4rem;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .section-description {
+            color: var(--text-secondary);
+            font-size: 1.125rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: transform 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .feature-title {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-description {
+            color: var(--text-secondary);
+        }
+
+        /* Modelo IA Section */
+        .ai-models {
+            padding: 6rem 2rem;
+            background-color: var(--bg-secondary);
+        }
+
+        .model-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .model-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .model-card.active {
+            border-color: var(--accent);
+            box-shadow: var(--shadow);
+        }
+
+        .model-name {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .model-features {
+            list-style: none;
+        }
+
+        .model-features li {
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+        }
+
+        .model-features i {
+            color: var(--success);
+        }
+
+        /* Campo Analysis Section */
+        .field-analysis {
+            padding: 6rem 2rem;
+            background-color: var(--bg-primary);
+        }
+
+        .analysis-example {
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .field-demo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            padding: 1rem;
+            background-color: var(--bg-secondary);
+            border-radius: 8px;
+        }
+
+        .field-name {
+            font-family: 'Courier New', monospace;
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        .field-arrow {
+            color: var(--text-secondary);
+        }
+
+        .field-meaning {
+            color: var(--text-primary);
+        }
+
+        /* Footer */
+        .footer {
+            padding: 4rem 2rem;
+            background-color: var(--bg-secondary);
+            color: var(--text-secondary);
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-section h3 {
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero-image {
+                order: -1;
+            }
+
+            .hero-cta {
+                justify-content: center;
+            }
+
+            .nav-links {
+                display: none;
+            }
+        }
+
+        /* Estilos para la sección de Progreso */
+        .progress-section {
+            padding: 6rem 2rem;
+            background-color: var(--bg-primary);
+        }
+
+        .progress-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .progress-overview {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .progress-stat {
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .progress-metrics {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+
+        .metric-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .metric-card i {
+            font-size: 2rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .metric-number {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .phase-tracking {
+            margin-bottom: 4rem;
+        }
+
+        .phase-list {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .phase-item {
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 2rem;
+        }
+
+        .phase-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .phase-status {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .phase-item.completed .phase-status {
+            background-color: var(--success);
+            color: white;
+        }
+
+        .phase-item.in-progress .phase-status {
+            background-color: var(--warning);
+            color: var(--text-primary);
+        }
+
+        .phase-item.pending .phase-status {
+            background-color: var(--text-secondary);
+            color: white;
+        }
+
+        .phase-progress {
+            margin-bottom: 1.5rem;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background-color: var(--bg-secondary);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background-color: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .phase-tasks {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .phase-tasks li {
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .phase-tasks li::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .phase-tasks li.completed::before {
+            background-color: var(--success);
+        }
+
+        .phase-tasks li.in-progress::before {
+            background-color: var(--warning);
+        }
+
+        .phase-tasks li.pending::before {
+            background-color: var(--text-secondary);
+        }
+
+        .current-focus {
+            background-color: var(--bg-secondary);
+            padding: 1rem;
+            border-radius: 8px;
+        }
+
+        .milestone-timeline {
+            margin-top: 4rem;
+        }
+
+        .timeline {
+            position: relative;
+            padding: 2rem 0;
+        }
+
+        .timeline::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background-color: var(--border);
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-left: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .timeline-item::before {
+            content: "";
+            position: absolute;
+            left: -5px;
+            top: 0;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: var(--accent);
+        }
+
+        .timeline-date {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Estilos para la sección de Arquitectura */
+        .architecture-section {
+            padding: 6rem 2rem;
+            background-color: var(--bg-secondary);
+        }
+
+        .architecture-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .arch-diagram {
+            margin-bottom: 4rem;
+        }
+
+        .component-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .component-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 2rem;
+        }
+
+        .component-features {
+            list-style: none;
+            margin: 1rem 0;
+        }
+
+        .component-features li {
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .component-features li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .tech-tag {
+            background-color: var(--bg-secondary);
+            color: var(--text-secondary);
+            padding: 0.25rem 0.75rem;
+            border-radius: 16px;
+            font-size: 0.875rem;
+        }
+
+        .data-flow {
+            margin-top: 4rem;
+        }
+
+        /* Plan de Implementación */
+        .implementation-plan {
+            padding: 2rem;
+            background-color: var(--bg-primary);
+        }
+
+        .phase-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .phase {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: var(--border-radius);
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+        }
+
+        .phase-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .phase-header h3 {
+            font-size: 1.25rem;
+            color: var(--text-primary);
+            margin: 0;
+        }
+
+        .phase-status {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            background-color: var(--bg-secondary);
+            color: var(--text-secondary);
+        }
+
+        .task-list {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .task {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 1rem;
+            align-items: start;
+            padding: 1rem;
+            background-color: var(--bg-secondary);
+            border-radius: var(--border-radius);
+        }
+
+        .task-check {
+            width: 1.25rem;
+            height: 1.25rem;
+            margin-top: 0.25rem;
+        }
+
+        .task-content {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .task-name {
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .task-details {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .task.completed {
+            background-color: var(--success);
+            opacity: 0.8;
+        }
+
+        .task.completed .task-name,
+        .task.completed .task-details {
+            color: white;
+        }
+
+        /* Sección Técnica */
+        .technical-section {
+            padding: 2rem;
+            background-color: var(--bg-primary);
+        }
+
+        .technical-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .code-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .metric-item {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.25rem;
+        }
+
+        .metric-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .metric-header i {
+            color: var(--accent);
+        }
+
+        .metric-value {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .metric-link {
+            display: inline-block;
+            margin-top: 0.5rem;
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.875rem;
+        }
+
+        .sprint-tasks {
+            margin-top: 1.5rem;
+        }
+
+        .task-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            margin-bottom: 0.75rem;
+            background-color: var(--card-bg);
+        }
+
+        .task-status {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .task-item.completed .task-status {
+            background-color: var(--success);
+        }
+
+        .task-item.in-progress .task-status {
+            background-color: var(--warning);
+        }
+
+        .task-item.pending .task-status {
+            background-color: var(--text-secondary);
+        }
+
+        .task-name {
+            flex: 1;
+            color: var(--text-primary);
+        }
+
+        .task-link {
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.875rem;
+        }
+
+        /* Documentación */
+        .documentation-section {
+            padding: 2rem;
+            background-color: var(--bg-secondary);
+        }
+
+        .docs-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 2rem;
+        }
+
+        .docs-nav {
+            border-right: 1px solid var(--border);
+            padding-right: 1.5rem;
+        }
+
+        .doc-link {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .doc-link:hover {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+        }
+
+        .doc-link.active {
+            background-color: var(--accent);
+            color: white;
+        }
+
+        .doc-link i {
+            font-size: 1.1rem;
+        }
+
+        /* Footer de Desarrollo */
+        .dev-footer {
+            padding: 1rem 2rem;
+            background-color: var(--bg-primary);
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .build-info, .env-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .build-status {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 16px;
+            font-size: 0.875rem;
+        }
+
+        .build-status.success {
+            background-color: var(--success);
+            color: white;
+        }
+
+        .commit-hash {
+            font-family: 'Courier New', monospace;
+            color: var(--text-secondary);
+        }
+
+        .env-tag {
+            background-color: var(--warning);
+            color: var(--text-primary);
+            padding: 0.25rem 0.75rem;
+            border-radius: 16px;
+            font-size: 0.875rem;
+        }
+
+        .python-version, .fastapi-version {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        /* Animaciones */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate {
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-code-branch"></i>
+                SAGE.IQ Development
+            </div>
+            <ul class="nav-links">
+                <li><a href="#development"><i class="fas fa-tasks"></i> Estado del Desarrollo</a></li>
+                <li><a href="#architecture"><i class="fas fa-project-diagram"></i> Arquitectura</a></li>
+                <li><a href="#technical"><i class="fas fa-code"></i> Implementación</a></li>
+                <li><a href="#docs"><i class="fas fa-book"></i> Documentación</a></li>
+            </ul>
+            <button class="theme-toggle" id="themeToggle">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+    </nav>
+
+    <section id="development" class="development-dashboard">
+        <div class="dashboard-container">
+            <div class="dashboard-header">
+                <h1>Panel de Desarrollo SAGE.IQ</h1>
+                <div class="version-info">
+                    <span id="currentVersion" class="version">
+                        <!-- Se actualizará dinámicamente con la última tag del repositorio -->
+                    </span>
+                    <span class="last-update">Última actualización: <time id="lastUpdateTime"></time></span>
+                </div>
+            </div>
+            <div class="git-stats">
+                <div class="repo-info">
+                    <div class="repo-header">
+                        <i class="fas fa-code-branch"></i>
+                        <a href="https://github.com/tu-usuario/SAGE.IQ" target="_blank" class="repo-link">SAGE.IQ</a>
+                    </div>
+                    <div id="lastCommit" class="last-commit">
+                        <!-- Se llenará dinámicamente -->
+                    </div>
+                </div>
+                <div id="branchStatus" class="branch-status">
+                    <!-- Se llenará dinámicamente -->
+                </div>
+                <div id="issuesList" class="issues-list">
+                    <!-- Se llenará dinámicamente -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="implementation-plan" class="implementation-plan">
+        <div class="section-header">
+            <h2 class="section-title">Plan de Implementación SAGE.IQ</h2>
+            <p class="section-description">Seguimiento detallado del desarrollo paso a paso</p>
+        </div>
+
+        <div class="phase-container">
+            <div class="phase">
+                <div class="phase-header">
+                    <h3>Fase 1: Configuración del Entorno</h3>
+                    <div class="phase-status" id="phase1-status">No Iniciado</div>
+                </div>
+                <div class="task-list">
+                    <div class="task" id="task1-1">
+                        <input type="checkbox" class="task-check">
+                        <span class="task-name">Configuración del repositorio Git</span>
+                        <span class="task-details">Inicialización del repo, estructura base, .gitignore</span>
+                    </div>
+                    <div class="task" id="task1-2">
+                        <input type="checkbox" class="task-check">
+                        <span class="task-name">Configuración del entorno Python</span>
+                        <span class="task-details">Python 3.11, virtualenv, dependencias base</span>
+                    </div>
+                    <div class="task" id="task1-3">
+                        <input type="checkbox" class="task-check">
+                        <span class="task-name">Instalación de FastAPI</span>
+                        <span class="task-details">FastAPI, Uvicorn, middlewares básicos</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="phase">
+                <div class="phase-header">
+                    <h3>Fase 2: Implementación Backend</h3>
+                    <div class="phase-status" id="phase2-status">No Iniciado</div>
+                </div>
+                <div class="task-list">
+                    <div class="task" id="task2-1">
+                        <input type="checkbox" class="task-check">
+                        <span class="task-name">Estructura base FastAPI</span>
+                        <span class="task-details">Routers, endpoints base, configuración inicial</span>
+                    </div>
+                    <div class="task" id="task2-2">
+                        <input type="checkbox" class="task-check">
+                        <span class="task-name">Conexión SQL Server</span>
+                        <span class="task-details">Configuración ODBC, pool de conexiones, pruebas</span>
+                    </div>
+                    <div class="task" id="task2-3">
+                        <input type="checkbox" class="task-check">
+                        <span class="task-name">Sistema de autenticación</span>
+                        <span class="task-details">JWT, roles, permisos, middleware de seguridad</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="phase">
+                <div class="phase-header">
+                    <h3>Fase 3: Integración IA</h3>
+                    <div class="phase-status" id="phase3-status">No Iniciado</div>
+                </div>
+                <div class="task-list">
+                    <div class="task" id="task3-1">
+                        <input type="checkbox" class="task-check">
+                        <span class="task-name">Configuración Ollama</span>
+                        <span class="task-details">Instalación, configuración, pruebas iniciales</span>
+                    </div>
+                    <div class="task" id="task3-2">
+                        <input type="checkbox" class="task-check">
+                        <span class="task-name">Implementación de modelos ES</span>
+                        <span class="task-details">Modelos en español, fine-tuning, evaluación</span>
+                    </div>
+                    <div class="task" id="task3-3">
+                        <input type="checkbox" class="task-check">
+                        <span class="task-name">Sistema de vectorización</span>
+                        <span class="task-details">Embeddings, índices, búsqueda semántica</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="phase">
+                <div class="phase-header">
+                    <h3>Fase 4: Frontend Dual</h3>
+                    <div class="phase-status" id="phase4-status">No Iniciado</div>
+                </div>
+                <div class="task-list">
+                    <div class="task" id="task4-1">
+                        <input type="checkbox" class="task-check">
+                        <span class="task-name">Interfaz administrativa</span>
+                        <span class="task-details">Streamlit admin (8503), configuración, monitoreo</span>
+                    </div>
+                    <div class="task" id="task4-2">
+                        <input type="checkbox" class="task-check">
+                        <span class="task-name">Interfaz cliente</span>
+                        <span class="task-details">Streamlit cliente (8504), consultas, visualización</span>
+                    </div>
+                    <div class="task" id="task4-3">
+                        <input type="checkbox" class="task-check">
+                        <span class="task-name">Sistema de consultas naturales</span>
+                        <span class="task-details">Procesamiento NLP, generación SQL, resultados</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="phase">
+                <div class="phase-header">
+                    <h3>Fase 5: Testing y Documentación</h3>
+                    <div class="phase-status" id="phase5-status">No Iniciado</div>
+                </div>
+                <div class="task-list">
+                    <div class="task" id="task5-1">
+                        <input type="checkbox" class="task-check">
+                        <span class="task-name">Tests unitarios</span>
+                        <span class="task-details">Pytest, cobertura, casos de prueba</span>
+                    </div>
+                    <div class="task" id="task5-2">
+                        <input type="checkbox" class="task-check">
+                        <span class="task-name">Tests de integración</span>
+                        <span class="task-details">Pruebas E2E, escenarios completos</span>
+                    </div>
+                    <div class="task" id="task5-3">
+                        <input type="checkbox" class="task-check">
+                        <span class="task-name">Documentación técnica</span>
+                        <span class="task-details">API docs, guías, ejemplos de uso</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="architecture" class="architecture-section">
+        <div class="section-header animate">
+            <h2 class="section-title">Arquitectura del Sistema</h2>
+            <p class="section-description">Diseño detallado de componentes y flujos</p>
+        </div>
+        <div class="architecture-container">
+            <div class="arch-diagram">
+                <h3>Diagrama de Componentes</h3>
+                <div class="diagram-content">
+                    <!-- Aquí irá el diagrama interactivo -->
+                </div>
+            </div>
+            
+            <div class="component-details">
+                <div class="component-card">
+                    <h4>Backend (FastAPI)</h4>
+                    <ul class="component-features">
+                        <li>API REST con autenticación JWT</li>
+                        <li>Middleware de seguridad personalizado</li>
+                        <li>Servicios modulares</li>
+                        <li>Sistema de caché</li>
+                    </ul>
+                    <div class="tech-stack">
+                        <span class="tech-tag">Python 3.11</span>
+                        <span class="tech-tag">FastAPI</span>
+                        <span class="tech-tag">SQLAlchemy</span>
+                        <span class="tech-tag">PyJWT</span>
+                    </div>
+                </div>
+
+                <div class="component-card">
+                    <h4>Frontend Dual</h4>
+                    <ul class="component-features">
+                        <li>Interfaz Administrativa (8503)</li>
+                        <li>Interfaz Cliente (8504)</li>
+                        <li>Sistema de consultas naturales</li>
+                        <li>Visualizaciones Plotly</li>
+                    </ul>
+                    <div class="tech-stack">
+                        <span class="tech-tag">Streamlit</span>
+                        <span class="tech-tag">Plotly</span>
+                        <span class="tech-tag">Python</span>
+                    </div>
+                </div>
+
+                <div class="component-card">
+                    <h4>Motor IA</h4>
+                    <ul class="component-features">
+                        <li>Modelos optimizados ES</li>
+                        <li>Sistema de vectorización</li>
+                        <li>Análisis semántico</li>
+                        <li>Procesamiento NLP</li>
+                    </ul>
+                    <div class="tech-stack">
+                        <span class="tech-tag">Ollama</span>
+                        <span class="tech-tag">LangChain</span>
+                        <span class="tech-tag">FAISS</span>
+                    </div>
+                </div>
+
+                <div class="component-card">
+                    <h4>Bases de Datos</h4>
+                    <ul class="component-features">
+                        <li>PostgreSQL: Metadatos</li>
+                        <li>SQL Server: SAGE 200</li>
+                        <li>Vector Store: FAISS</li>
+                    </ul>
+                    <div class="tech-stack">
+                        <span class="tech-tag">PostgreSQL</span>
+                        <span class="tech-tag">SQL Server</span>
+                        <span class="tech-tag">FAISS</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="data-flow">
+                <h3>Flujo de Datos</h3>
+                <div class="flow-diagram">
+                    <!-- Aquí irá el diagrama de flujo -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="technical" class="technical-section">
+        <div class="section-header">
+            <h2>Implementación Técnica</h2>
+        </div>
+        <div class="technical-container">
+            <div class="code-section">
+                <h3>Estado del Código</h3>
+                <div class="code-metrics">
+                    <div class="metric-item">
+                        <div class="metric-header">
+                            <i class="fas fa-code"></i>
+                            <span>Cobertura de Tests</span>
+                        </div>
+                        <div class="metric-value">78%</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-header">
+                            <i class="fas fa-bug"></i>
+                            <span>Issues Críticos</span>
+                        </div>
+                        <div class="metric-value">3</div>
+                        <a href="#issues" class="metric-link">Ver Detalles</a>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-header">
+                            <i class="fas fa-clock"></i>
+                            <span>Último Deploy</span>
+                        </div>
+                        <div class="metric-value">2h ago</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="current-sprint">
+                <h3>Sprint Actual: Backend Development</h3>
+                <div class="sprint-tasks">
+                    <div class="task-item completed">
+                        <span class="task-status"></span>
+                        <span class="task-name">Configuración FastAPI</span>
+                    </div>
+                    <div class="task-item completed">
+                        <span class="task-status"></span>
+                        <span class="task-name">Sistema JWT</span>
+                    </div>
+                    <div class="task-item in-progress">
+                        <span class="task-status"></span>
+                        <span class="task-name">Endpoints Principales</span>
+                        <a href="#task-details" class="task-link">Ver Progreso</a>
+                    </div>
+                    <div class="task-item pending">
+                        <span class="task-status"></span>
+                        <span class="task-name">Integración DB</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="docs" class="documentation-section">
+        <div class="section-header">
+            <h2>Documentación Técnica</h2>
+        </div>
+        <div class="docs-container">
+            <div class="docs-nav">
+                <a href="#api-docs" class="doc-link active">
+                    <i class="fas fa-book"></i>
+                    <span>API Reference</span>
+                </a>
+                <a href="#architecture-docs" class="doc-link">
+                    <i class="fas fa-project-diagram"></i>
+                    <span>Arquitectura</span>
+                </a>
+                <a href="#db-docs" class="doc-link">
+                    <i class="fas fa-database"></i>
+                    <span>Base de Datos</span>
+                </a>
+                <a href="#deployment-docs" class="doc-link">
+                    <i class="fas fa-rocket"></i>
+                    <span>Deployment</span>
+                </a>
+            </div>
+            <div class="docs-content">
+                <!-- El contenido se cargará dinámicamente -->
+            </div>
+        </div>
+    </section>
+
+    <footer class="dev-footer">
+        <div class="footer-content">
+            <div class="build-info">
+                <span class="build-status success">
+                    <i class="fas fa-check-circle"></i>
+                    Build Passing
+                </span>
+                <span class="commit-hash">
+                    <i class="fas fa-code-branch"></i>
+                    #a1b2c3d
+                </span>
+            </div>
+            <div class="env-info">
+                <span class="env-tag">Development</span>
+                <span class="python-version">Python 3.11</span>
+                <span class="fastapi-version">FastAPI 0.109.0</span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Configuración de GitHub
+        const GITHUB_CONFIG = {
+            owner: 'tu-usuario',
+            repo: 'SAGE.IQ',
+            branch: 'main',
+            apiUrl: 'https://api.github.com/repos'
+        };
+
+        // Estado del Repositorio
+        const REPO_STATE = {
+            lastCommit: null,
+            openIssues: [],
+            pullRequests: [],
+            branchStatus: null
+        };
+
+        // Theme Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const html = document.documentElement;
+        const themeIcon = themeToggle.querySelector('i');
+
+        function setTheme(theme) {
+            html.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+            themeIcon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+        }
+
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        setTheme(savedTheme);
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            setTheme(newTheme);
+        });
+
+        // Funciones de GitHub API
+        async function fetchGitHubData(endpoint) {
+            try {
+                const response = await fetch(`${GITHUB_CONFIG.apiUrl}/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/${endpoint}`);
+                if (!response.ok) throw new Error(`GitHub API error: ${response.statusText}`);
+                return await response.json();
+            } catch (error) {
+                console.error('Error fetching GitHub data:', error);
+                return null;
+            }
+        }
+
+        async function updateVersion() {
+            const tags = await fetchGitHubData('tags');
+            const versionEl = document.getElementById('currentVersion');
+            if (tags && tags.length > 0) {
+                versionEl.textContent = tags[0].name;
+            } else {
+                versionEl.textContent = 'En desarrollo';
+            }
+        }
+
+        async function updateMilestones() {
+            const milestones = await fetchGitHubData('milestones');
+            const milestonesEl = document.getElementById('milestones');
+            
+            if (!milestones || milestones.length === 0) {
+                milestonesEl.innerHTML = '<p class="no-data">No hay milestones definidos</p>';
+                return;
+            }
+
+            milestonesEl.innerHTML = `
+                <div class="milestones-list">
+                    ${milestones.map(milestone => `
+                        <div class="milestone-item">
+                            <h4>${milestone.title}</h4>
+                            <div class="milestone-meta">
+                                <span>Issues: ${milestone.open_issues} abiertos</span>
+                                ${milestone.due_on ? 
+                                    `<span>Vence: ${new Date(milestone.due_on).toLocaleDateString()}</span>` 
+                                    : ''}
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        async function updateLastCommit() {
+            const commits = await fetchGitHubData(`commits?sha=${GITHUB_CONFIG.branch}&per_page=1`);
+            if (!commits || !commits[0]) return;
+
+            const lastCommit = commits[0];
+            REPO_STATE.lastCommit = {
+                message: lastCommit.commit.message,
+                author: lastCommit.commit.author.name,
+                date: new Date(lastCommit.commit.author.date),
+                sha: lastCommit.sha.substring(0, 7)
+            };
+
+            const lastCommitEl = document.getElementById('lastCommit');
+            lastCommitEl.innerHTML = `
+                <div class="commit-info">
+                    <div class="commit-message">${REPO_STATE.lastCommit.message}</div>
+                    <div class="commit-meta">
+                        <span class="commit-author">${REPO_STATE.lastCommit.author}</span>
+                        <span class="commit-date">${REPO_STATE.lastCommit.date.toLocaleString()}</span>
+                        <span class="commit-sha">${REPO_STATE.lastCommit.sha}</span>
+                    </div>
+                </div>
+            `;
+        }
+
+        async function updateBranchStatus() {
+            const status = await fetchGitHubData(`branches/${GITHUB_CONFIG.branch}/status`);
+            if (!status) return;
+
+            REPO_STATE.branchStatus = status.state;
+            const branchStatusEl = document.getElementById('branchStatus');
+            branchStatusEl.innerHTML = `
+                <div class="branch-info ${status.state}">
+                    <i class="fas fa-${status.state === 'success' ? 'check' : 'times'}-circle"></i>
+                    <span>${GITHUB_CONFIG.branch}</span>
+                    <span class="status-text">${status.state}</span>
+                </div>
+            `;
+        }
+
+        async function updateIssues() {
+            const issues = await fetchGitHubData('issues?state=open');
+            if (!issues) return;
+
+            REPO_STATE.openIssues = issues.map(issue => ({
+                number: issue.number,
+                title: issue.title,
+                labels: issue.labels,
+                created_at: new Date(issue.created_at),
+                url: issue.html_url
+            }));
+
+            const issuesListEl = document.getElementById('issuesList');
+            issuesListEl.innerHTML = `
+                <div class="issues-header">
+                    <h4>Issues Abiertos (${REPO_STATE.openIssues.length})</h4>
+                </div>
+                <div class="issues-content">
+                    ${REPO_STATE.openIssues.map(issue => `
+                        <a href="${issue.url}" target="_blank" class="issue-item">
+                            <span class="issue-number">#${issue.number}</span>
+                            <span class="issue-title">${issue.title}</span>
+                            ${issue.labels.map(label => `
+                                <span class="issue-label" style="background-color: #${label.color}">
+                                    ${label.name}
+                                </span>
+                            `).join('')}
+                        </a>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        // Sistema de Actualización Automática
+        async function updateDashboard() {
+            await Promise.all([
+                updateLastCommit(),
+                updateBranchStatus(),
+                updateIssues()
+            ]);
+
+            document.querySelector('.last-update time').textContent = 
+                new Date().toLocaleString();
+        }
+
+        // Configuración GitHub
+        // La configuración de GitHub se cargará desde variables de entorno
+        const GITHUB_CONFIG = {
+            owner: 'zeravlamv',
+            repo: 'sage_iq', // GitHub convirtió el nombre a minúsculas
+            token: '', // NO almacenar tokens en el código
+            branch: 'main'
+        };
+
+        // Funciones de GitHub API
+        async function fetchGitHubData(endpoint) {
+            const baseUrl = 'https://api.github.com/repos';
+            const headers = {
+                'Authorization': `Bearer ${GITHUB_CONFIG.token}`,
+                'Accept': 'application/vnd.github.v3+json'
+            };
+
+            try {
+                const response = await fetch(
+                    `${baseUrl}/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/${endpoint}`,
+                    { headers }
+                );
+                if (!response.ok) throw new Error(`GitHub API error: ${response.statusText}`);
+                return await response.json();
+            } catch (error) {
+                console.error('Error fetching GitHub data:', error);
+                return null;
+            }
+        }
+
+        async function createInitialIssues() {
+            const tasks = document.querySelectorAll('.task');
+            for (const task of tasks) {
+                const taskName = task.querySelector('.task-name').textContent;
+                const taskDetails = task.querySelector('.task-details').textContent;
+                const phase = task.closest('.phase').querySelector('h3').textContent;
+                
+                const issueBody = `## ${phase}\n\n${taskDetails}\n\nTarea del plan de implementación de SAGE.IQ`;
+                
+                try {
+                    const response = await fetch(
+                        `https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/issues`,
+                        {
+                            method: 'POST',
+                            headers: {
+                                'Authorization': `Bearer ${GITHUB_CONFIG.token}`,
+                                'Accept': 'application/vnd.github.v3+json',
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                title: taskName,
+                                body: issueBody,
+                                labels: ['plan-implementacion']
+                            })
+                        }
+                    );
+                    
+                    if (response.ok) {
+                        const issue = await response.json();
+                        task.id = `task-${issue.number}`;
+                    }
+                } catch (error) {
+                    console.error('Error creating issue:', error);
+                }
+            }
+        }
+
+        async function syncTasksWithGitHub() {
+            try {
+                // Obtener issues de GitHub
+                const issues = await fetchGitHubData('issues?state=all&labels=plan-implementacion');
+                if (!issues) return;
+
+                // Mapear issues a tareas
+                issues.forEach(issue => {
+                    const taskId = `task-${issue.number}`;
+                    const task = document.getElementById(taskId);
+                    if (task) {
+                        const checkbox = task.querySelector('.task-check');
+                        checkbox.checked = issue.state === 'closed';
+                        task.classList.toggle('completed', issue.state === 'closed');
+                        updatePhaseStatus(task.closest('.phase'));
+                    }
+                });
+
+                // Actualizar timestamp
+                document.getElementById('lastUpdateTime').textContent = new Date().toLocaleString();
+            } catch (error) {
+                console.error('Error syncing with GitHub:', error);
+            }
+        }
+
+        // Sistema de Gestión de Tareas
+        function initTaskSystem() {
+            const tasks = document.querySelectorAll('.task');
+            const phases = document.querySelectorAll('.phase');
+
+            // Cargar estado guardado
+            loadTaskState();
+
+            tasks.forEach(task => {
+                const checkbox = task.querySelector('.task-check');
+                checkbox.addEventListener('change', () => {
+                    task.classList.toggle('completed', checkbox.checked);
+                    updatePhaseStatus(task.closest('.phase'));
+                    saveTaskState();
+                });
+            });
+        }
+
+        function updatePhaseStatus(phase) {
+            const tasks = phase.querySelectorAll('.task');
+            const completedTasks = phase.querySelectorAll('.task.completed');
+            const statusEl = phase.querySelector('.phase-status');
+
+            if (completedTasks.length === 0) {
+                statusEl.textContent = 'No Iniciado';
+                statusEl.className = 'phase-status not-started';
+            } else if (completedTasks.length === tasks.length) {
+                statusEl.textContent = 'Completado';
+                statusEl.className = 'phase-status completed';
+            } else {
+                statusEl.textContent = 'En Progreso';
+                statusEl.className = 'phase-status in-progress';
+            }
+        }
+
+        function saveTaskState() {
+            const state = {};
+            document.querySelectorAll('.task').forEach(task => {
+                const id = task.id;
+                const isCompleted = task.classList.contains('completed');
+                state[id] = isCompleted;
+            });
+            localStorage.setItem('taskState', JSON.stringify(state));
+        }
+
+        function loadTaskState() {
+            const savedState = localStorage.getItem('taskState');
+            if (savedState) {
+                const state = JSON.parse(savedState);
+                Object.entries(state).forEach(([id, isCompleted]) => {
+                    const task = document.getElementById(id);
+                    if (task) {
+                        const checkbox = task.querySelector('.task-check');
+                        checkbox.checked = isCompleted;
+                        task.classList.toggle('completed', isCompleted);
+                        updatePhaseStatus(task.closest('.phase'));
+                    }
+                });
+            }
+        }
+
+        // Inicialización
+        async function initialize() {
+            if (!GITHUB_CONFIG.owner || !GITHUB_CONFIG.repo || !GITHUB_CONFIG.token) {
+                console.error('GitHub configuration is incomplete');
+                return;
+            }
+
+            initTaskSystem();
+            
+            // Crear issues iniciales si no existen
+            const issues = await fetchGitHubData('issues?labels=plan-implementacion');
+            if (!issues || issues.length === 0) {
+                await createInitialIssues();
+            }
+            
+            await syncTasksWithGitHub();
+
+            // Actualización periódica de GitHub
+            setInterval(syncTasksWithGitHub, 60000); // Cada minuto
+        }
+
+        // Iniciar el sistema
+        initialize();
+    </script>
+</body>
+</html>
+</html>
